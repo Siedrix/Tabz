@@ -1,9 +1,9 @@
 Tabz
-Tabz es una extensi髇 de chrome que permite saber que pantallas se tienen abiertas y manipular la informaci髇 sobre ellas.
-Por el momento cambia la p醙ina de una nueva presenta un dashboard y muestra las que existen usando jquery isotope.
+Tabz es una extensi贸n de chrome que permite saber que pantallas se tienen abiertas y manipular la informaci贸n sobre ellas.
+Por el momento cambia la p谩gina de una nueva presenta un dashboard y muestra las que existen usando jquery isotope.
 ToDos:
-	昑ener una funci髇 para recuperar la informaci髇 de la p醙ina.
-	昑ener la posibilidad de buscar sobre las tabz abiertas en el dashboard.
-	昑ener varios renders distintos en el dashboard(resumen, versi髇 detallada).
-	旽acer que cuando se abra una nueva ventana se refleje en el dashboard.
-	昋ue cuando se abra un dashbaord se cheque que no haya un dashboard ya abierto
+	鈥ener una funci贸n para recuperar la informaci贸n de la p谩gina.
+	鈥ener la posibilidad de buscar sobre las tabz abiertas en el dashboard.
+	鈥ener varios renders distintos en el dashboard(resumen, versi贸n detallada).
+	鈥acer que cuando se abra una nueva ventana se refleje en el dashboard.
+	鈥ue cuando se abra un dashbaord se cheque que no haya un dashboard ya abierto
