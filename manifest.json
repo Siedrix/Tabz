@@ -1,0 +1,14 @@
+{
+	"name": "Tabz",
+	"version": "0.1",
+	"background_page": "background.html",
+	"description": "Overwrite Chrome FTW!!!",
+//	"browser_action": {},
+//	"options_page": "dashboard.html",
+	"chrome_url_overrides" : {
+		"newtab": "dashboard.html"
+	},
+	"permissions": [
+		"tabs", "http://*/*"
+	]
+}
