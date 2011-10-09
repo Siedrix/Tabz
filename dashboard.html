@@ -7,10 +7,28 @@
 <script src="src/jquery.isotope.min.js" type="text/javascript"></script>
 <script>
 $(document).ready(function(){
-	console.log('hi');
 	$.template( "tabTemplate", $('#tabTemplate'));
+	$.template( "pagesTemplate", $('#pagesTemplate'));
+	$.template( "logInToReadLaterTemplate", $('#logInToReadLaterTemplate'));
 
-
+	chrome.extension.sendRequest({
+		type : 'get read it later'
+	},function(response){
+		if(response.action == 'no user'){
+			$.tmpl( "logInToReadLaterTemplate", {} ).appendTo( "nav" );
+		}else{		
+			$.each(response.pages, function(i, item){
+				//$('#main').append('<li>'+item.title+'<p>'+item.text+'</p></li>')
+				$('body').data('readItLater',{user:true});
+				$('.buttons	.add').show();
+				var $container = $('#main');
+				$container.isotope({        
+					itemSelector: '.tab'      
+				});				
+				$.tmpl( "pagesTemplate", item ).data('page',item).appendTo( "#pages" );		
+			});		
+		}
+	});
 
 	
 	chrome.extension.sendRequest({
@@ -18,8 +36,14 @@ $(document).ready(function(){
 	},function(response) {
 		$.each(response.tabs, function(i, item){
 			//$('#main').append('<li>'+item.title+'<p>'+item.text+'</p></li>')
-			$.tmpl( "tabTemplate", item ).data('tab',item).appendTo( "#main" )
-			console.log(i, item);			
+			$.tmpl( "tabTemplate", item ).data('tab',item).appendTo( "#main" );
+			if($('body').data('readItLater') && $('body').data('readItLater').user){
+				$('.buttons	.add').show();
+				var $container = $('#main');
+				$container.isotope({        
+					itemSelector: '.tab'      
+				});				
+			}
 		});
 		var $container = $('#main');
 		$container.isotope({        
@@ -27,19 +51,53 @@ $(document).ready(function(){
 		});          		
 	});
 	
+	$('#main').delegate('.buttons .add','click',function(e){
+		var tab = $(this).closest('.tab');
+
+		if(!tab.hasClass('procesing')){
+			e.stopPropagation();
+			e.preventDefault();
+
+			tab.addClass('procesing');
+
+			chrome.extension.sendRequest({
+				type : 'add to read it later',
+				tab : tab.data('tab')
+			},function(response) {		
+				tab.remove();
+			});
+		}
+	});	
+
 	$("#main").delegate(".tab", "click", function(){
-		console.log('Focus on:',$(this).data('tab'));
 		chrome.extension.sendRequest({
 			type : 'focus on',
 			tab : $(this).data('tab')
-		},function(response) {		
-			console.log(response);
-		})
+		},function(response) {});
 	});
-	
+
+	$('nav').delegate('#logInToReadLater button','click',function(){
+		var user = $("#logInToReadLater #user").val();
+		var password = $("#logInToReadLater #password").val();
+		chrome.extension.sendRequest({
+			type : 'Log in to read it later',
+			user : user,
+			password : password
+		},function(response) {		
+			if(response.action == 'not logged in'){
+				
+			}else{
+				window.location.reload()
+			}
+		});		
+	});
+
+	$('#pages').delegate('a','click',function(){
+		window.location = this.href;
+	});
+		
 	$('#button').click(function(){
 		$('#tabs').html('');
-		console.log('Buscando')
 		chrome.extension.sendRequest({
 			type  : 'search in tabs',
 			query : $('#search').val()
@@ -54,7 +112,6 @@ $(document).ready(function(){
 			$.each(response.tabs, function(i, item){
 				//$('#main').append('<li>'+item.title+'<p>'+item.text+'</p></li>')
 				$.tmpl( "tabTemplate", item ).data('tab',item).appendTo( "#main" )
-				console.log(i, item);			
 			});
 			var $container = $('#main');
 			$container.isotope({        
@@ -71,6 +128,7 @@ $(document).ready(function(){
 	<nav>
 		<h2>There is no place like</h2>
 		<h1>{127.0.0.1}</h1>
+		<ul id="pages"></ul>
 <!--		
 		<p><input id="search"/></p>
 		<p><button id="button" >Buscar</button></p>
@@ -87,6 +145,22 @@ $(document).ready(function(){
 			{{if favIconUrl}}<img class="favicon" src="${favIconUrl}">{{/if}}
 			${title}
 		</h4>
+		<div class="buttons">
+			<a href="#${id}" class="add" style="display:none">Read later</a>
+		</div>
 	</article>
+</script>
+</script>
+<script id="pagesTemplate" text="text/x-jquery-tmpl">
+	<li><a href="${url}">${title}</a></li>
+</script>
+<script id="logInToReadLaterTemplate" text="text/x-jquery-tmpl">
+	<div id="logInToReadLater">
+		<p>User</p>
+		<p><input id="user"/></p>
+		<p>Password</p>
+		<p><input type="password" id="password"/></p>
+		<button >Log in</button>
+	</div>
 </script>
 <html>

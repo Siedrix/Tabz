@@ -55,3 +55,28 @@ nav h1{
 	max-width:36px;
 	max-height:36px;
 }
+
+#pages{
+	padding: 0;
+	margin-right: 20px;
+}
+
+#pages li{
+	margin-bottom:10px;
+	list-style:none;
+}
+#pages li a{
+	color:white;
+	text-decoration:none;
+	font-family: 'ColaborateThinRegular', Arial, sans-serif;letter-spacing: 0;
+}
+
+.procesing{
+	opacity : 0.1;
+}
+
+.buttons .add{
+	float:right;
+	text-decoration:none;
+	font-family: 'ColaborateThinRegular', Arial, sans-serif;letter-spacing: 0;
+}
