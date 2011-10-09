@@ -76,6 +76,22 @@ $(document).ready(function(){
 		},function(response) {});
 	});
 
+	$("#controls").delegate("#markAsRead", "click", function(){
+		console.log('Sending mask as read')
+		chrome.extension.sendRequest({
+			type : 'mark as read',
+			href : $('body').data('openUri')
+		},function(response) {
+			console.log('Marked as read');
+			$('#content').hide();
+			$('#content').find('#header').html('');
+			$('#content').find('#entry').html('');
+			$('box').hide();
+			$('body').data('openUri','')
+		});
+
+	});	
+
 	$('nav').delegate('#logInToReadLater button','click',function(){
 		var user = $("#logInToReadLater #user").val();
 		var password = $("#logInToReadLater #password").val();
@@ -92,8 +108,25 @@ $(document).ready(function(){
 		});		
 	});
 
-	$('#pages').delegate('a','click',function(){
-		window.location = this.href;
+	$('#pages').delegate('a','click',function(e){
+		e.preventDefault()
+		var link = this;
+		$('body').data('openUri',link.href);
+		chrome.extension.sendRequest({
+			type : 'get read it now',
+			url  : this.href
+		},function(response) {		
+			console.log('Read Now',response);
+			$('#content').css({
+				width : '660px',
+				display : 'block'
+			});
+
+			$('#content').find('#entry') .html(response.page);
+			$('#content').find('#header').html(link.innerHTML);
+			$('box').show();
+
+		});		
 	});
 		
 	$('#button').click(function(){
@@ -137,6 +170,16 @@ $(document).ready(function(){
 		<ul id="openTabs"></ul>
 !-->		
 	</nav>
+	<article id="content">
+		<h2 id="header"></h2>
+		<div id="entry">
+
+		</div>
+		<div id="controls">
+			<a id="markAsRead" href="#">Mark as read</a>
+		</div>
+	</article>
+	<box></box>
 	<section id="main"></section>
 </body>
 <script id="tabTemplate" text="">

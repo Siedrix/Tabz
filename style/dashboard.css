@@ -36,6 +36,42 @@ nav h2{
 nav h1{
 	font-size: 40px;
 }
+#content{
+	display: none;
+	background-color: #FFF;
+	padding-left  : 260px;
+	padding-top   : 20px;
+	padding-bottom: 20px;
+	padding-right : 20px;
+	width :660px;
+	position: absolute;
+	z-index: 99;
+	float: left;
+	color: black;
+}
+#content #entry{
+	text-align : justify;
+}
+#content #controls{
+	position: fixed;
+	z-index: 99;
+	width: 100px;
+	height: 100px;
+	top: 20px;
+	left: 936px;
+	background: white;
+	border-top-right-radius: 15px;
+	border-bottom-right-radius: 15px;
+}
+box{
+	display: none;
+	position: fixed;
+	z-index: 98;	
+	background:black;
+	opacity:0.8;
+	width:100%;
+	height:100%;
+}
 #main{
 	margin: 0px 20px 0px 250px;
 	padding: 20px 0px 20px 0px;

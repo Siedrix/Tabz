@@ -13,7 +13,6 @@ $(document).ready(function(){
 			}else if(request.type == 'add to read it later'){
 				tabz.get('readItLater',function(data){
 					if(data){
-
 						$.get('https://readitlaterlist.com/v2/add?username='+data.user+'&password='+data.password+'&apikey=aN2dbH72T2582Es293A5105YbOg9k4eD&url='+request.tab.url+'&title='+request.tab.title,
 						function(readItLater){
 							chrome.tabs.remove(request.tab.id, function(){});
@@ -21,6 +20,23 @@ $(document).ready(function(){
 						});				
 					}else{
 					}
+				});
+			}else if(request.type == 'mark as read'){
+				console.log('mark as read ',request.href);
+				var url = request.href;
+				tabz.get('readItLater',function(data){
+					$.get('https://readitlaterlist.com/v2/send?username='+data.user+'&password='+data.password+'&apikey=aN2dbH72T2582Es293A5105YbOg9k4eD&read={%220%22:{%22url%22:%22'+url+'%22}}',
+					function(d){
+						console.log('marked as read',d);
+						sendResponse({action:'marked as read'});
+					});              
+				});
+			}else if(request.type == 'get read it now'){
+				console.log('Requesting ',request.url);
+				$.get('http://text.readitlaterlist.com/v2/text?apikey=aN2dbH72T2582Es293A5105YbOg9k4eD&url='+request.url,
+				function(readItNow){
+					console.log('Got ',request.url);
+					sendResponse({action:'read it now', page:readItNow});
 				});
 			}else if(request.type == 'get read it later'){
 				tabz.get('readItLater',function(data){
