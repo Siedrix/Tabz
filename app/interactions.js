@@ -59,6 +59,8 @@ $(document).ready(function(){
 						sendResponse({action:'not logged in'});
 					}
 				});				
+			}else if(request.type == 'close tab'){
+				chrome.tabs.remove(request.tab.id, function(){});
 			}else if(request.type == 'focus on'){
 				chrome.tabs.update(request.tab.id, {selected : true}, function(){});
 				if(sender.tab.url == "chrome://newtab/"){

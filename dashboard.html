@@ -69,9 +69,21 @@ $(document).ready(function(){
 		}
 	});	
 
-	$("#main").delegate(".tab", "click", function(){
+	$("#main").delegate(".tab", "click", function(e){
+		e.stopPropagation();
+
+		var tab = $(this).closest('.tab');
+
 		chrome.extension.sendRequest({
-			type : 'focus on',
+			type : 'close tab',
+			tab : $(this).data('tab')
+		},function(response) {});
+		tab.remove();
+	});
+
+	$("#main").delegate(".tab .close", "click", function(){
+		chrome.extension.sendRequest({
+			type : 'close',
 			tab : $(this).data('tab')
 		},function(response) {});
 	});
@@ -191,6 +203,7 @@ $(document).ready(function(){
 		<div class="buttons">
 			<a href="#${id}" class="add" style="display:none">Read later</a>
 		</div>
+		<img class="close" src="images/close.png">
 	</article>
 </script>
 </script>

@@ -91,6 +91,11 @@ box{
 	max-width:36px;
 	max-height:36px;
 }
+.tab .close{
+	position:absolute;
+	right:-20px;
+	top:-15px;
+}
 
 #pages{
 	padding: 0;
