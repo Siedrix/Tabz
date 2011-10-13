@@ -60,6 +60,7 @@ $(document).ready(function(){
 					}
 				});				
 			}else if(request.type == 'close tab'){
+				console.log('Close tab', request,sender);
 				chrome.tabs.remove(request.tab.id, function(){});
 			}else if(request.type == 'focus on'){
 				chrome.tabs.update(request.tab.id, {selected : true}, function(){});

@@ -69,23 +69,24 @@ $(document).ready(function(){
 		}
 	});	
 
-	$("#main").delegate(".tab", "click", function(e){
+	$("#main").delegate(".tab", "click", function(){
+		chrome.extension.sendRequest({
+			type : 'focus on',
+			tab  : $(this).data('tab')
+		},function(response) {});
+	});
+
+	$("#main").delegate(".tab .close", "click", function(e){
 		e.stopPropagation();
 
 		var tab = $(this).closest('.tab');
+		tab.addClass('procesing');
 
 		chrome.extension.sendRequest({
 			type : 'close tab',
-			tab : $(this).data('tab')
+			tab  : tab.data('tab')
 		},function(response) {});
 		tab.remove();
-	});
-
-	$("#main").delegate(".tab .close", "click", function(){
-		chrome.extension.sendRequest({
-			type : 'close',
-			tab : $(this).data('tab')
-		},function(response) {});
 	});
 
 	$("#controls").delegate("#markAsRead", "click", function(){
