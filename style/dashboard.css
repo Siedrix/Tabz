@@ -8,6 +8,9 @@
     font-weight: normal;
     font-style: normal;
 }
+template{
+	display:none;
+}
 
 body{
 	margin:0;
@@ -100,13 +103,14 @@ box{
 #pages{
 	padding: 0;
 	margin-right: 20px;
+	margin-top: 10px;
 }
 
-#pages li{
+#pages > div{
 	margin-bottom:10px;
 	list-style:none;
 }
-#pages li a{
+#pages > div a{
 	color:white;
 	text-decoration:none;
 	font-family: 'ColaborateThinRegular', Arial, sans-serif;letter-spacing: 0;
@@ -120,4 +124,11 @@ box{
 	float:right;
 	text-decoration:none;
 	font-family: 'ColaborateThinRegular', Arial, sans-serif;letter-spacing: 0;
+}
+
+
+/* jScrollPane */
+.jspVerticalBar
+{
+	left: 0;
 }

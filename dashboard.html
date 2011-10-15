@@ -1,15 +1,25 @@
 <html> 
 <head> 
 <link rel="stylesheet" type="text/css" href="style/dashboard.css">
+<link rel="stylesheet" type="text/css" href="vendors/jScrollPane/style/jquery.jscrollpane.css">
+
 <script src="src/jquery.js" type="text/javascript"></script>
 <script src="src/underscore-min.js" type="text/javascript"></script>
 <script src="src/jquery.tmpl.min.js" type="text/javascript"></script>
 <script src="src/jquery.isotope.min.js" type="text/javascript"></script>
+
+<script src="vendors/jScrollPane/script/jquery.mousewheel.js" type="text/javascript"></script>
+<script src="vendors/jScrollPane/script/jquery.jscrollpane.min.js" type="text/javascript"></script>
+
 <script>
 $(document).ready(function(){
 	$.template( "tabTemplate", $('#tabTemplate'));
 	$.template( "pagesTemplate", $('#pagesTemplate'));
 	$.template( "logInToReadLaterTemplate", $('#logInToReadLaterTemplate'));
+
+	$(window).resize(function() {
+		$('nav').jScrollPane();
+	});
 
 	chrome.extension.sendRequest({
 		type : 'get read it later'
@@ -24,8 +34,9 @@ $(document).ready(function(){
 				var $container = $('#main');
 				$container.isotope({        
 					itemSelector: '.tab'      
-				});				
+				});			
 				$.tmpl( "pagesTemplate", item ).data('page',item).appendTo( "#pages" );		
+				$('nav').jScrollPane();
 			});		
 		}
 	});
@@ -174,7 +185,7 @@ $(document).ready(function(){
 	<nav>
 		<h2>There is no place like</h2>
 		<h1>{127.0.0.1}</h1>
-		<ul id="pages"></ul>
+		<div id="pages"></div>
 <!--		
 		<p><input id="search"/></p>
 		<p><button id="button" >Buscar</button></p>
@@ -194,8 +205,8 @@ $(document).ready(function(){
 	</article>
 	<box></box>
 	<section id="main"></section>
-</body>
-<script id="tabTemplate" text="">
+
+<template id="tabTemplate" text="text/template">
 	<article class="tab">
 		<h4>
 			{{if favIconUrl}}<img class="favicon" src="${favIconUrl}">{{/if}}
@@ -206,12 +217,11 @@ $(document).ready(function(){
 		</div>
 		<img class="close" src="images/close.png">
 	</article>
-</script>
-</script>
-<script id="pagesTemplate" text="text/x-jquery-tmpl">
-	<li><a href="${url}">${title}</a></li>
-</script>
-<script id="logInToReadLaterTemplate" text="text/x-jquery-tmpl">
+</template>
+<template id="pagesTemplate" text="text/template">
+	<div><a href="${url}">${title}</a></div>
+</template>
+<template id="logInToReadLaterTemplate" text="text/template">
 	<div id="logInToReadLater">
 		<p>User</p>
 		<p><input id="user"/></p>
@@ -219,5 +229,6 @@ $(document).ready(function(){
 		<p><input type="password" id="password"/></p>
 		<button >Log in</button>
 	</div>
-</script>
+</template>
+</body>
 <html>
