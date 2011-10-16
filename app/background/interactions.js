@@ -2,6 +2,7 @@ $(document).ready(function(){
 	$('app').bind('dbConnection',function(e,r){
 		
 		chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+			console.log('Got:',request, sender, sendResponse);
 			if(request.type == 'get open tabs'){
 				
 				tabz.all(function(r){
@@ -37,6 +38,16 @@ $(document).ready(function(){
 				function(readItNow){
 					console.log('Got ',request.url);
 					sendResponse({action:'read it now', page:readItNow});
+				});
+			}else if(request.type == 'get chrome apps'){
+				chrome.management.getAll(function(data){
+					apps = _(data).chain().select(function(app){
+						if(app.isApp){
+							return app
+						}
+					}).value()
+
+					sendResponse({action:'here are your chrome apps', apps:apps});
 				});
 			}else if(request.type == 'get read it later'){
 				tabz.get('readItLater',function(data){

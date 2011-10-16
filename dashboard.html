@@ -10,6 +10,9 @@
 <script src="src/jquery.tmpl.min.js" type="text/javascript"></script>
 <script src="src/jquery.isotope.min.js" type="text/javascript"></script>
 
+<script src="src/lawnchair.js" type="text/javascript"></script>
+<script src="src/lawnchair-webkit-sqlite.js" type="text/javascript"></script>
+
 <script src="vendors/jScrollPane/script/jquery.mousewheel.js" type="text/javascript"></script>
 <script src="vendors/jScrollPane/script/jquery.jscrollpane.min.js" type="text/javascript"></script>
 
@@ -21,17 +24,10 @@
 		<h2>There is no place like</h2>
 		<h1>{127.0.0.1}</h1>
 		<div id="pages"></div>
-<!--		
-		<p><input id="search"/></p>
-		<p><button id="button" >Buscar</button></p>
-		<ul id="tabs"></ul>
-		<p>Tabs Abiertas</p>
-		<ul id="openTabs"></ul>
-!-->		
 	</nav>
 	<tabs>
-		<div class="readItLater">ReadItLater</div>
-		<div class="chromeApps">ChromeApps</div>
+		<div id="tab-readItLater" class="readItLater">ReadItLater</div>
+		<div id="tab-chromeApps" class="chromeApps">ChromeApps</div>
 	</tabs>
 	<article id="content">
 		<h2 id="header"></h2>
@@ -44,7 +40,7 @@
 	</article>
 	<box></box>
 	<section id="main"></section>
-
+<!-- Templates Start, need to move to async load !-->
 <template id="tabTemplate" text="text/template">
 	<article class="tab">
 		<h4>
@@ -58,7 +54,10 @@
 	</article>
 </template>
 <template id="pagesTemplate" text="text/template">
-	<div><a href="${url}">${title}</a></div>
+	<div class="readItLaterTab"><a href="${url}">${title}</a></div>
+</template>
+<template id="appsTemplate" text="text/template">
+	<div class="appTab"><a href="${appLaunchUrl}">${name}</a></div>
 </template>
 <template id="logInToReadLaterTemplate" text="text/template">
 	<div id="logInToReadLater">
@@ -69,5 +68,6 @@
 		<button >Log in</button>
 	</div>
 </template>
+<!-- Templates End !-->
 </body>
 <html>

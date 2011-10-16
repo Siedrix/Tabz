@@ -50,8 +50,20 @@ $(document).ready(function(){
 			$('box').hide();
 			$('body').data('openUri','')
 		});
-
 	});	
+
+	$('tabs').delegate('div','click',function(){
+		var action = this.id.replace('tab-','');
+		if(action == 'readItLater'){
+			console.log('Request Read It Later');
+			Tabz.actions.requestReadItLater();
+		}else if(action == 'chromeApps'){
+			console.log('Request Chrome Apps');
+			Tabz.actions.requestChromeApps();
+		}else{
+			console.log('No action register');
+		}
+	});
 
 	$('nav').delegate('#logInToReadLater button','click',function(){
 		var user = $("#logInToReadLater #user").val();
@@ -69,7 +81,7 @@ $(document).ready(function(){
 		});		
 	});
 
-	$('#pages').delegate('a','click',function(e){
+	$('#pages').delegate('.readItLaterTab a','click',function(e){
 		e.preventDefault()
 		var link = this;
 		$('body').data('openUri',link.href);
