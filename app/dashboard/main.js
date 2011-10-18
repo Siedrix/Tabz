@@ -19,10 +19,12 @@ $(document).ready(function(){
 
 	Tabz.actions.requestReadItLater = function(){	
 		chrome.extension.sendRequest({
-			type : 'get read it later'
+			type : 'getReadItLater'
 		},function(response){
 			if(response.action == 'no user'){
-				$.tmpl( "logInToReadLaterTemplate", {} ).appendTo( "nav" );
+				$('#pages').html('').attr('class','');
+				$('nav').attr('class','');				
+				$.tmpl( "logInToReadLaterTemplate", {} ).appendTo( "#pages" );
 			}else{		
 				$('#pages').html('').attr('class','');
 				$('nav').attr('class','');
@@ -44,7 +46,7 @@ $(document).ready(function(){
 
 	Tabz.actions.requestChromeApps = function(){	
 		chrome.extension.sendRequest({
-			type : 'get chrome apps'
+			type : 'getChromeApps'
 		},function(response){
 			console.log(response);
 			$('#pages').html('');
@@ -65,7 +67,7 @@ $(document).ready(function(){
 
 	
 	chrome.extension.sendRequest({
-		type : 'get open tabs'
+		type : 'getOpenTabs'
 	},function(response) {
 		$.each(response.tabs, function(i, item){
 			//$('#main').append('<li>'+item.title+'<p>'+item.text+'</p></li>')

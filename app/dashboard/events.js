@@ -9,7 +9,7 @@ $(document).ready(function(){
 			tab.addClass('procesing');
 
 			chrome.extension.sendRequest({
-				type : 'add to read it later',
+				type : 'addToReadItLater',
 				tab : tab.data('tab')
 			},function(response) {		
 				tab.remove();
@@ -19,7 +19,7 @@ $(document).ready(function(){
 
 	$("#main").delegate(".tab", "click", function(){
 		chrome.extension.sendRequest({
-			type : 'focus on',
+			type : 'focusOn',
 			tab  : $(this).data('tab')
 		},function(response) {});
 	});
@@ -31,7 +31,7 @@ $(document).ready(function(){
 		tab.addClass('procesing');
 
 		chrome.extension.sendRequest({
-			type : 'close tab',
+			type : 'closeTab',
 			tab  : tab.data('tab')
 		},function(response) {});
 		tab.remove();
@@ -40,7 +40,7 @@ $(document).ready(function(){
 	$("#controls").delegate("#markAsRead", "click", function(){
 		console.log('Sending mask as read')
 		chrome.extension.sendRequest({
-			type : 'mark as read',
+			type : 'markAsRead',
 			href : $('body').data('openUri')
 		},function(response) {
 			console.log('Marked as read');
@@ -69,7 +69,7 @@ $(document).ready(function(){
 		var user = $("#logInToReadLater #user").val();
 		var password = $("#logInToReadLater #password").val();
 		chrome.extension.sendRequest({
-			type : 'Log in to read it later',
+			type : 'logInToReadItLater',
 			user : user,
 			password : password
 		},function(response) {		
@@ -86,7 +86,7 @@ $(document).ready(function(){
 		var link = this;
 		$('body').data('openUri',link.href);
 		chrome.extension.sendRequest({
-			type : 'get read it now',
+			type : 'getReadItNow',
 			url  : this.href
 		},function(response) {		
 			console.log('Read Now',response);

@@ -8,50 +8,21 @@
 <script src="src/lawnchair.js" type="text/javascript"></script>
 <script src="src/lawnchair-webkit-sqlite.js" type="text/javascript"></script>
 
+<script src="vendors/eventEmitter2/eventemitter2.js" type="text/javascript"></script>
+
 <script src="app/background/db.js" type="text/javascript"></script>
 <script src="app/background/events.js" type="text/javascript"></script>
 <script src="app/background/interactions.js" type="text/javascript"></script>
 
 <script> 
 $(document).ready(function(){
+	window.ee = new EventEmitter2({
+		wildcard  : true, // should the event emitter use wildcards.
+		delimiter : '::' // the delimiter used to segment namespaces, defaults to `.`.
+    });
+
 	$('app').trigger('start');
 });
-
-/*
-var list;
-var tabz = new Lawnchair('tabz',function(){
-	console.log('DB ready to rock');
-	if(list){
-		console.log('I have a list of tabs, i should check if its the correct one');
-	}else{
-		console.log('Should fetch a list');
-		chrome.windows.getAll({populate : true}, function(windows){
-			list = _.map(windows,function(window){ 
-				return window.tabs
-			});
-			list = _.flatten(list);
-			console.log('Just fetched a list');
-			_.each(list,function(tab){
-				console.log(tab);
-				tab.key = tab.id
-				tabz.save(tab);
-			});
-		});
-	}	
-});
-
-chrome.windows.onCreated.addListener(function(){
-	chrome.windows.getAll({populate : true}, function(windows){
-		list = _.map(windows,function(item){ 
-			console.log(item.tabs); 
-			return item.tabs
-		});
-		list = _.flatten(list);
-	});
-});
-
-
-*/
 </script> 
 </head> 
 <body>
