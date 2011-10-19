@@ -15,20 +15,15 @@ $(document).ready(function(){
 						};
 					})
 
-					if(hasDashboardOpen){
-						console.log('hasDashboardOpen', hasDashboardOpen,tab);
-						chrome.tabs.update(hasDashboardOpen.id, {selected:true});
-						chrome.tabs.remove(tab.id)
-					}else{
-						tab.key = tab.id;
-						tabz.save(tab);
-					}
+					console.log('hasDashboardOpen', hasDashboardOpen.key, hasDashboardOpen,tab,);
+					chrome.tabs.remove(hasDashboardOpen.key)
+
 	
 				});
-			}else{
-				tab.key = tab.id;
-				tabz.save(tab);
 			}
+		
+			tab.key = tab.id;
+			tabz.save(tab);
 		});
 		
 		chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
