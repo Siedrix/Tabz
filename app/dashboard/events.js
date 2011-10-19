@@ -52,14 +52,27 @@ $(document).ready(function(){
 		});
 	});	
 
+	$("#controls").delegate("#close", "click", function(){
+		console.log('Closing');
+		$('#content').hide();
+		$('#content').find('#header').html('');
+		$('#content').find('#entry').html('');
+		$('box').hide();
+		$('body').data('openUri','')
+	});		
+
 	$('tabs').delegate('div','click',function(){
 		var action = this.id.replace('tab-','');
+		console.log('Click on tabs:',action);
 		if(action == 'readItLater'){
 			console.log('Request Read It Later');
 			Tabz.actions.requestReadItLater();
 		}else if(action == 'chromeApps'){
 			console.log('Request Chrome Apps');
 			Tabz.actions.requestChromeApps();
+		}else if(action == 'chromeBookmarks'){
+			console.log('Request Chrome Bookmarks');
+			Tabz.actions.requestChromeBookmarks();
 		}else{
 			console.log('No action register');
 		}

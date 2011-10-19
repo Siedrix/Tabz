@@ -4,9 +4,31 @@ $(document).ready(function(){
 		console.log('Events Running');
 		
 		chrome.tabs.onCreated.addListener(function(tab){
-			console.log('Tab created',tab.id);
-			tab.key = tab.id;
-			tabz.save(tab);
+			console.log('Tab created',tab.id,tab.url);
+			if(tab.url == 'chrome://newtab/'){
+				tabz.all(function(d){
+					var hasDashboardOpen = false;
+					
+					_(d).each(function(item){
+						if(item.url == 'chrome://newtab/'){
+							hasDashboardOpen = tab;
+						};
+					})
+
+					if(hasDashboardOpen){
+						console.log('hasDashboardOpen', hasDashboardOpen,tab);
+						chrome.tabs.update(hasDashboardOpen.id, {selected:true});
+						chrome.tabs.remove(tab.id)
+					}else{
+						tab.key = tab.id;
+						tabz.save(tab);
+					}
+	
+				});
+			}else{
+				tab.key = tab.id;
+				tabz.save(tab);
+			}
 		});
 		
 		chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {

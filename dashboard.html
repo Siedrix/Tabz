@@ -26,8 +26,9 @@
 		<div id="pages"></div>
 	</nav>
 	<tabs>
-		<div id="tab-readItLater" class="readItLater">ReadItLater</div>
 		<div id="tab-chromeApps" class="chromeApps">ChromeApps</div>
+		<div id="tab-chromeBookmarks" class="chromeBookmarks">ChromeBookmarks</div>
+		<div id="tab-readItLater" class="readItLater">ReadItLater</div>
 	</tabs>
 	<article id="content">
 		<h2 id="header"></h2>
@@ -36,6 +37,7 @@
 		</div>
 		<div id="controls">
 			<a id="markAsRead" href="#">Mark as read</a>
+			<a id="close" href="#">close</a>
 		</div>
 	</article>
 	<box></box>
@@ -58,6 +60,9 @@
 </template>
 <template id="appsTemplate" text="text/template">
 	<div class="appTab"><a href="${appLaunchUrl}">${name}</a></div>
+</template>
+<template id="bookmarksTemplate" text="text/template">
+	<div class="bookmarksTab"><a href="${url}">${title}</a></div>
 </template>
 <template id="logInToReadLaterTemplate" text="text/template">
 	<div id="logInToReadLater">

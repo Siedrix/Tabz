@@ -68,6 +68,27 @@ $(document).ready(function(){
 			});			
 		});			
 
+		ee.on('Dashboard::getChromeBookmarks',function(e,request, sender, sendResponse) {
+			chrome.bookmarks.getTree(function(b){
+				var bookmarks =[],data;
+				//Flat bookmark tree into an array, remove javascript bookmarkelts;
+				var flat = function(data){
+					if( _.isArray(data) ){
+						_(data).each(function(item){
+							flat(item);
+						})
+					}else if( data.children){
+						flat(data.children)
+					}else if( data.url && data.url.indexOf('javascript') != 0 ){
+						bookmarks.push(data);
+					}
+				}
+				flat(b);
+				
+				sendResponse({action:'here are your chrome bookmarks', bookmarks:bookmarks});
+			});
+		});					
+
 		ee.on('Dashboard::getReadItLater',function(e,request, sender, sendResponse) {
 			tabz.get('readItLater',function(data){
 				if(data){

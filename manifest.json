@@ -9,6 +9,6 @@
 		"newtab": "dashboard.html"
 	},
 	"permissions": [
-		"tabs", "management", "http://*/*" , "https://*/*"
+		"tabs", "management", "bookmarks", "http://*/*" , "https://*/*"
 	]
 }

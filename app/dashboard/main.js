@@ -3,6 +3,7 @@ $(document).ready(function(){
 	$.template( "pagesTemplate", $('#pagesTemplate'));
 	$.template( "logInToReadLaterTemplate", $('#logInToReadLaterTemplate'));
 	$.template( "appsTemplate", $('#appsTemplate'));
+	$.template( "bookmarksTemplate", $('#bookmarksTemplate'));
 
 	$(window).resize(function() {
 		$('nav').jScrollPane();
@@ -44,6 +45,22 @@ $(document).ready(function(){
 		Tabz.db.save({key:'currentTab',tab:'ReadItLater'});
 	}
 
+	Tabz.actions.requestChromeBookmarks = function(){
+		chrome.extension.sendRequest({
+			type : 'getChromeBookmarks'
+		},function(response){
+			console.log(response);
+			$('#pages').html('');
+			$('nav').attr('class','');			
+			$.each(response.bookmarks, function(i, item){
+				$.tmpl( "bookmarksTemplate", item ).data('app',item).appendTo( "#pages" );
+				$('nav').jScrollPane().addClass('chromeBookmarks');
+			});									
+		});
+
+		Tabz.db.save({key:'currentTab',tab:'ChromeBookmarks'});
+	}
+
 	Tabz.actions.requestChromeApps = function(){	
 		chrome.extension.sendRequest({
 			type : 'getChromeApps'
@@ -51,13 +68,7 @@ $(document).ready(function(){
 			console.log(response);
 			$('#pages').html('');
 			$('nav').attr('class','');
-			$.each(response.apps, function(i, item){
-				//$('body').data('readItLater',{user:true});
-				$('.buttons	.add').show();
-				var $container = $('#main');
-				$container.isotope({        
-					itemSelector: '.tab'      
-				});			
+			$.each(response.apps, function(i, item){			
 				$.tmpl( "appsTemplate", item ).data('app',item).appendTo( "#pages" );		
 				$('nav').jScrollPane().addClass('chromeApps');
 			});						
@@ -86,12 +97,12 @@ $(document).ready(function(){
 		});          		
 
 		Tabz.db.get('currentTab',function(data){
-		if(data == null){
-			Tabz.actions.requestChromeApps();
-		}else{
-  			Tabz.actions['request' + data.tab ]()
-		}
-	});
+			if(data == null){
+				Tabz.actions.requestChromeApps();
+			}else{
+	  			Tabz.actions['request' + data.tab ]()
+			}
+		});
 	});
 
 	window.Tabz = Tabz;
