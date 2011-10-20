@@ -16,7 +16,7 @@ $(document).ready(function(){
 					})
 
 					console.log('hasDashboardOpen', hasDashboardOpen.key, hasDashboardOpen,tab);
-					chrome.tabs.remove(hasDashboardOpen.key)
+					//chrome.tabs.remove(hasDashboardOpen.key)
 
 	
 				});
