@@ -81,14 +81,10 @@ $(document).ready(function(){
 		type : 'getOpenTabs'
 	},function(response) {
 		$.each(response.tabs, function(i, item){
-			//$('#main').append('<li>'+item.title+'<p>'+item.text+'</p></li>')
+			console.log('Tab:',item)
 			$.tmpl( "tabTemplate", item ).data('tab',item).appendTo( "#main" );
 			if($('body').data('readItLater') && $('body').data('readItLater').user){
 				$('.buttons	.add').show();
-				var $container = $('#main');
-				$container.isotope({        
-					itemSelector: '.tab'      
-				});				
 			}
 		});
 		var $container = $('#main');

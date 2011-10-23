@@ -44,7 +44,7 @@
 	<section id="main"></section>
 <!-- Templates Start, need to move to async load !-->
 <template id="tabTemplate" text="text/template">
-	<article class="tab">
+	<article class="tab {{if pinned}}pinned{{/if}}">
 		<h4>
 			{{if favIconUrl}}<img class="favicon" src="${favIconUrl}">{{/if}}
 			${title}
@@ -52,7 +52,7 @@
 		<div class="buttons">
 			<a href="#${id}" class="add" style="display:none">Read later</a>
 		</div>
-		<img class="close" src="images/close.png">
+		{{if !pinned}}<img class="close" src="images/close.png">{{/if}}
 	</article>
 </template>
 <template id="pagesTemplate" text="text/template">

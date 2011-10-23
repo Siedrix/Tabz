@@ -125,6 +125,10 @@ box{
 	background: white url(../images/content-area-bottombg.png) repeat-x bottom left;
 	opacity:0.95;
 }
+.tab.pinned{
+	box-shadow:0px 0px 5px #f6de81;
+	outline:#f6de81 solid 2px;
+}
 .tab .favicon{
 	max-width:36px;
 	max-height:36px;
