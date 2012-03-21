@@ -1,0 +1,41 @@
+@font-face {
+    font-family: 'ColaborateThinRegular';
+    src: url('../fonts/ColabThi-webfont.eot');
+    src: url('../fonts/ColabThi-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/ColabThi-webfont.woff') format('woff'),
+         url('../fonts/ColabThi-webfont.ttf') format('truetype'),
+         url('../fonts/ColabThi-webfont.svg#ColaborateThinRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ColaborateBoldRegular';
+    src: url('../fonts/ColabBol-webfont.eot');
+    src: url('../fonts/ColabBol-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/ColabBol-webfont.woff') format('woff'),
+         url('../fonts/ColabBol-webfont.ttf') format('truetype'),
+         url('../fonts/ColabBol-webfont.svg#ColaborateThinRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+	margin: 0;
+	padding: 0;
+	background:url(../backs/2.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+}
+
+#options-wrapper{
+	padding: 20px;
+	height: 87%;
+}
+
+#main{	
+	padding: 20px;
+	background: white;
+	height:100%;
+	opacity: 0.95;
+
+	font-family: 'ColaborateThinRegular', Arial, sans-serif;
+}

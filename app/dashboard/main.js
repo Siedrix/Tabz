@@ -103,4 +103,11 @@ $(document).ready(function(){
 
 	window.Tabz = Tabz;
 
+	var background = localStorage.getItem('background');
+	if(background){
+		console.log('Set new background', background);
+		$('body').css('background-image', 'url('+background+')');
+	}
+	delete background;
+
 });
