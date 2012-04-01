@@ -106,7 +106,7 @@ $(document).ready(function(){
 	var background = localStorage.getItem('background');
 	if(background){
 		backgroundImage = $('<style/>')
-		 .text('background-image:url('+background+')')
+		 .text('body{background-image:url('+background+')}')
 		 .appendTo('head');
 	}
 	delete background;
