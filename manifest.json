@@ -4,8 +4,6 @@
 	"background_page": "background.html",
 	"description": "Overwrite Chrome FTW!!!",
 	"options_page": "options.html",
-//	"browser_action": {},
-//	"options_page": "dashboard.html",
 	"chrome_url_overrides" : {
 		"newtab": "dashboard.html"
 	},

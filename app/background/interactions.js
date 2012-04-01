@@ -1,6 +1,15 @@
 $(document).ready(function(){
 	$('app').bind('dbConnection',function(e,r){
 		
+		window.ports = {};
+		chrome.extension.onConnect.addListener(function(port) {
+			window.ports[port.portId_] = port;
+
+			port.onDisconnect.addListener(function(data){
+				delete window.ports[data.portId_];
+			});
+		})
+
 		chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 			if(request.type,sender.tab.url){
 				console.log('ee',request.type,sender.tab.url);
@@ -9,10 +18,10 @@ $(document).ready(function(){
 		});
 
 	    ee.on('Dashboard::*',function(e,request, sender, sendResponse) {
-	    	console.log('got:',e,request, sender, sendResponse);
+	    	console.log('got:',e,request, sender);
 	    	if(ee.listeners('Dashboard::'+request.type).length == 0){
 	    		sendResponse({action:'invalid', error: 'No way to process the request'});	
-	    		console.log('Invalid Request:',e,request, sender, sendResponse);
+	    		console.log('Invalid Request:',e,request, sender);
 	    	}
 	    });		
 

@@ -105,9 +105,14 @@ $(document).ready(function(){
 
 	var background = localStorage.getItem('background');
 	if(background){
-		console.log('Set new background', background);
-		$('body').css('background-image', 'url('+background+')');
+		backgroundImage = $('<style/>')
+		 .text('background-image:url('+background+')')
+		 .appendTo('head');
 	}
 	delete background;
 
+	window.port = chrome.extension.connect({name: "dashboard"});
+	port.onMessage.addListener(function(msg) {
+		console.log('msg:',msg);
+	});
 });
