@@ -15,11 +15,14 @@ $(document).ready(function(){
 						};
 					})
 
-					console.log('hasDashboardOpen', hasDashboardOpen.key, hasDashboardOpen,tab);
+					//console.log('hasDashboardOpen', hasDashboardOpen.key, hasDashboardOpen,tab);
 					//chrome.tabs.remove(hasDashboardOpen.key)
 
 	
 				});
+			}else{
+				debugger;
+				ee.emit('Background::Create',tab);
 			}
 		
 			tab.key = tab.id;
@@ -28,8 +31,10 @@ $(document).ready(function(){
 		
 		chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
 			tabz.get(tabId+'.0',function(r){
-				console.log('removing tab',tabId);
-				tabz.remove(r)
+				//console.log('removing tab',tabId);
+				if(r){
+					tabz.remove(r)
+				}
 			});
 		});
 		
@@ -38,9 +43,13 @@ $(document).ready(function(){
 				chrome.tabs.get(tabId, function(tab){
 					tab.key = tab.id;
 					tabz.save(tab);
-					console.log('Tab update completed');
+					//console.log('Tab update completed');
+					if(tab.url != "chrome://newtab/"){
+						ee.emit('Background::Update',tab);
+					}
 				});
 			}
+
 		});
 	});
 });

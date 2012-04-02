@@ -12,13 +12,33 @@ $(document).ready(function(){
 
 		chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 			if(request.type,sender.tab.url){
-				console.log('ee',request.type,sender.tab.url);
+				//console.log('ee',request.type,sender.tab.url);
 				ee.emit('Dashboard::'+request.type,request, sender, sendResponse);
 			}
 		});
 
+		ee.on('Background::Create',function(e,tab){
+			console.log('** Tab New',tab, _.isEmpty(ports), ports);
+			if( !_.isEmpty(ports) ){
+				console.log('notifing dashboards');
+				_(ports).each(function(port) {
+					port.postMessage(tab);
+				});
+			};
+		});
+
+		ee.on('Background::Update',function(e,tab){
+			console.log('** Tab Updated',tab, _.isEmpty(ports), ports);
+			if( !_.isEmpty(ports) ){
+				console.log('notifing dashboards');
+				_(ports).each(function(port) {
+					port.postMessage(tab);
+				});
+			};
+		});		
+
 	    ee.on('Dashboard::*',function(e,request, sender, sendResponse) {
-	    	console.log('got:',e,request, sender);
+	    	//console.log('got:',e,request, sender);
 	    	if(ee.listeners('Dashboard::'+request.type).length == 0){
 	    		sendResponse({action:'invalid', error: 'No way to process the request'});	
 	    		console.log('Invalid Request:',e,request, sender);
@@ -51,7 +71,7 @@ $(document).ready(function(){
 			tabz.get('readItLater',function(data){
 				$.get('https://readitlaterlist.com/v2/send?username='+data.user+'&password='+data.password+'&apikey=aN2dbH72T2582Es293A5105YbOg9k4eD&read={%220%22:{%22url%22:%22'+url+'%22}}',
 				function(d){
-					console.log('marked as read',d);
+					//console.log('marked as read',d);
 					sendResponse({action:'marked as read'});
 				});              
 			});			
@@ -60,7 +80,7 @@ $(document).ready(function(){
 		ee.on('Dashboard::getReadItNow',function(e,request, sender, sendResponse) {
 			$.get('http://text.readitlaterlist.com/v2/text?apikey=aN2dbH72T2582Es293A5105YbOg9k4eD&url='+request.url,
 			function(readItNow){
-				console.log('Got ',request.url);
+				//console.log('Got ',request.url);
 				sendResponse({action:'read it now', page:readItNow});
 			});			
 		});
