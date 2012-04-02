@@ -21,7 +21,6 @@ $(document).ready(function(){
 	
 				});
 			}else{
-				debugger;
 				ee.emit('Background::Create',tab);
 			}
 		
