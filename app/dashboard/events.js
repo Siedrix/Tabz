@@ -66,32 +66,38 @@ $(document).ready(function(){
 		console.log('Click on tabs:',action);
 		if(action == 'readItLater'){
 			console.log('Request Read It Later');
-			Tabz.actions.requestReadItLater();
+			tabz.actions.requestReadItLater();
 		}else if(action == 'chromeApps'){
 			console.log('Request Chrome Apps');
-			Tabz.actions.requestChromeApps();
+			tabz.actions.requestChromeApps();
 		}else if(action == 'chromeBookmarks'){
 			console.log('Request Chrome Bookmarks');
-			Tabz.actions.requestChromeBookmarks();
+			tabz.actions.requestChromeBookmarks();
 		}else{
 			console.log('No action register');
 		}
 	});
 
 	$('nav').delegate('#logInToReadLater button','click',function(){
-		var user = $("#logInToReadLater #user").val();
+		var username = $("#logInToReadLater #user").val();
 		var password = $("#logInToReadLater #password").val();
-		chrome.extension.sendRequest({
-			type : 'logInToReadItLater',
-			user : user,
-			password : password
-		},function(response) {		
-			if(response.action == 'not logged in'){
+
+		user.requestLogInToReadItLater(username,password, function(response){
+
+			console.log('request complete');
+		});
+
+		// chrome.extension.sendRequest({
+		// 	type : 'logInToReadItLater',
+		// 	user : user,
+		// 	password : password
+		// },function(response) {		
+		// 	if(response.action == 'not logged in'){
 				
-			}else{
-				window.location.reload()
-			}
-		});		
+		// 	}else{
+		// 		window.location.reload()
+		// 	}
+		// });
 	});
 
 	$('#pages').delegate('.readItLaterTab a','click',function(e){

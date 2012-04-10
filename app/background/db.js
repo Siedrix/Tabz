@@ -44,7 +44,7 @@ $(document).ready(function(){
 						tabz.save(tab);
 					});
 					$('app').trigger('dbConnection',{list:list});
-				});				
+				});
 			}
 		})
 	
