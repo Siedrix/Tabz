@@ -27,39 +27,26 @@
 <script src="app/dashboard/events.js" ></script>
 </head>
 <body>
-	<nav>
-		<h2>There is no place like</h2>
-		<h1>{127.0.0.1}</h1>
-		<div id="pages"></div>
-	</nav>
-	<tabs>
-		<div id="tab-chromeApps" class="chromeApps">ChromeApps</div>
-		<div id="tab-chromeBookmarks" class="chromeBookmarks">ChromeBookmarks</div>
-		<div id="tab-readItLater" class="readItLater">ReadItLater</div>
-	</tabs>
-	<article id="content">
-		<h2 id="header"></h2>
-		<div id="entry">
-
-		</div>
-		<div id="controls">
-			<a id="markAsRead" href="#">Mark as read</a>
-			<a id="close" href="#">close</a>
-		</div>
-	</article>
-	<box></box>
+	<header>
+		<div id="logo">{Tabz}</div>
+		<nav>
+			<div>Current Content</div>
+		</nav>
+	</header>
 	<section id="main"></section>
 <!-- Templates Start, need to move to async load !-->
 <template id="tabTemplate" text="text/template">
 	<article class="tab {{if pinned}}pinned{{/if}}">
-		<h4>
-			{{if favIconUrl}}<img class="favicon" src="${favIconUrl}">{{/if}}
-			${title}
-		</h4>
-		<div class="buttons">
-			<a href="#${id}" class="add" style="display:none">Read later</a>
+		<div class="container">
+			<h4>
+				{{if favIconUrl}}<img class="favicon" src="${favIconUrl}">{{/if}}
+				${title}
+			</h4>
+			<div class="buttons">
+				<a href="#${id}" class="add" style="display:none">Read later</a>
+			</div>
+			{{if !pinned}}<img class="close" src="images/close.png">{{/if}}
 		</div>
-		{{if !pinned}}<img class="close" src="images/close.png">{{/if}}
 	</article>
 </template>
 <template id="pagesTemplate" text="text/template">
