@@ -2,37 +2,41 @@
 <head> 
 <title>{Tabz}</title>
 
-<link rel="stylesheet" type="text/css" href="style/dashboard.css">
-<link rel="stylesheet" type="text/css" href="vendors/jScrollPane/style/jquery.jscrollpane.css">
+<link rel="stylesheet" type="text/css" href="public/style/dashboard.css">
 
-<script src="src/jquery.js" type="text/javascript"></script>
-<script src="src/jquery.tmpl.min.js" type="text/javascript"></script>
-<script src="src/jquery.isotope.min.js" type="text/javascript"></script>
+<script src="public/src/jquery.js" type="text/javascript"></script>
+<script src="public/src/jquery.tmpl.min.js" type="text/javascript"></script>
+<script src="public/src/jquery.isotope.min.js" type="text/javascript"></script>
 
-<script src="src/underscore-min.js" type="text/javascript"></script>
-<script src="src/backbone.js" type="text/javascript"></script>
-<script src="src/backbone.utils.js" type="text/javascript"></script>
-<script src="src/backbone.localStorage.js" type="text/javascript"></script>
-<script src="src/namespace.js" type="text/javascript"></script>
+<script src="public/src/underscore-min.js" type="text/javascript"></script>
+<script src="public/src/backbone.js" type="text/javascript"></script>
+<script src="public/src/namespace.js" type="text/javascript"></script>
 
 <script src="modules/user.js" type="text/javascript"></script>
-
-<script src="src/lawnchair.js" type="text/javascript"></script>
-<script src="src/lawnchair-webkit-sqlite.js" type="text/javascript"></script>
-
-<script src="vendors/jScrollPane/script/jquery.mousewheel.js" type="text/javascript"></script>
-<script src="vendors/jScrollPane/script/jquery.jscrollpane.min.js" type="text/javascript"></script>
+<script src="modules/information.js" type="text/javascript"></script>
 
 <script src="app/dashboard/main.js" ></script>
-<script src="app/dashboard/events.js" ></script>
 </head>
 <body>
 	<header>
 		<div id="logo">{Tabz}</div>
-		<nav>
-			<div>Current Content</div>
-		</nav>
+		<div id="user">log in</div>
 	</header>
+	<nav>
+		<ul>
+			<li>Filters</li>
+			<li class="clickable button">Bookmarks</li>
+			<li class="clickable button">Save for later</li>
+			<li class="clickable button">Current Content</li>
+		</ul>
+	</nav>
+	<filters>
+		<h3>By content type</h3>
+		<ul>
+			<li>All</li>
+			<li>Videos</li>
+		</ul>
+	</filters>
 	<section id="main"></section>
 <!-- Templates Start, need to move to async load !-->
 <template id="tabTemplate" text="text/template">
@@ -45,7 +49,7 @@
 			<div class="buttons">
 				<a href="#${id}" class="add" style="display:none">Read later</a>
 			</div>
-			{{if !pinned}}<img class="close" src="images/close.png">{{/if}}
+			{{if !pinned}}<img class="close" src="public/images/close.png">{{/if}}
 		</div>
 	</article>
 </template>

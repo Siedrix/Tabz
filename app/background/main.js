@@ -1,10 +1,6 @@
 (function() {
 
-var Chrome      = namespace.module("chrome");
-var ReadItLater = namespace.module("readItLater");
-var Bookmark = namespace.module("bookmark");
-var App = namespace.module("app");
-
+var Information = namespace.module("information");
 var User = namespace.module("user");
 
 ee.on('App::Start',function(){
@@ -12,18 +8,23 @@ ee.on('App::Start',function(){
     window.tabz = {};
 
     tabz.user = (new User.Model).sync();
+    tabz.information = new Information.Collection;
 
-    tabz.chrome = new Chrome.Collection();
-    tabz.chrome.load();
 
-    tabz.bookmarks = new Bookmark.Collection();
-    tabz.bookmarks.load();    
+    tabz.information.getCurrentInfo(function(data){
+        console.log('log', data);
+        tabz.information.persist();
+    });
 
-    tabz.app = new App.Collection();
-    tabz.app.load();
 
-    tabz.readItLater = new ReadItLater.Collection();
-    tabz.readItLater.load();
+    window.ports = {};
+    chrome.extension.onConnect.addListener(function(port) {
+        window.ports[port.portId_] = port;
+
+        port.onDisconnect.addListener(function(data){
+            delete window.ports[data.portId_];
+        });
+    });
 });
 
 

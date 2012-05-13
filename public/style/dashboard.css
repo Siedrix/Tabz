@@ -24,7 +24,7 @@ template{
 
 body{
 	margin:0;
-	background:url(../backs/beige_paper.png);
+	background:url(../backs/wood_pattern.png);
 }
 h1,h2,h3,h4,h5,h6{
 	font-family: 'ColaborateThinRegular', Arial, sans-serif;
@@ -32,34 +32,91 @@ h1,h2,h3,h4,h5,h6{
 	word-wrap: break-word;
 }
 header{
-	position: fixed;
-	z-index: 998;
-	width: 100%;
+	position: absolute;
+	left: 41px;
 	top: 0;
-	left: 0;
-	background: url('../backs/blackmamba.png');
-	height: 41px;
-	box-shadow: 1px 1px 3px #444;
 }
 header #logo{
+	position: absolute;
 	font-family:ColaborateBoldRegular;
 	color: #444;
 	background: url('../backs/ricepaper2.png');
-	position: absolute;
 	height: 40px;
 	padding: 8px 20px 5px;
 	font-size: 30px;
-	left: 41px;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 	box-shadow: 0px 0px 3px #999;
+	z-index: 30;
 }
-header #content{}
+header #user{
+	position: absolute;
+	top: 4px;
+	left: 123px;
+	width: 100px;
+	background: white;
+	padding: 10px;
+	z-index: 29;		
+}
+nav{
+	font-family: 'ColaborateThinRegular', Arial, sans-serif;	
+	position: absolute;
+	right: 0;
+	top: 0;
+	font-size: 1.17em;	
+	z-index: 20;		
+}
+nav ul{
+	list-style: none;
+	margin-right: 81px;	
+}
+nav ul li{
+	float: right;
+	margin: 0px 10px;	
+	padding: 10px 10px;	
+}
+
+nav ul li.button{
+	background: white;
+	border-radius: 4px;
+}
+
+filters{
+	font-family: 'ColaborateThinRegular', Arial, sans-serif;	
+	position: absolute;
+	right: 0;
+	top: 0;
+	padding-top: 42px;
+	width: 147px;
+	padding-left: 10px;
+	height: 100%;
+	background: white;
+	opacity: .5;
+	z-index: 10;	
+}
+
+filters h3{
+	font-size: 1em;	
+	margin-bottom: 5px;	
+}
+filters ul{
+	list-style: none;
+	padding-left: 10px;
+	margin-top: 5px;	
+}
 
 #main{
-	margin: 70px 20px 20px 20px;
+	margin: 70px 175px 20px 20px;
 	padding: 2px 2px;
+	overflow: visible !important;
 }
+
+/* Helpers */
+.clickable{
+	cursor: pointer;
+}
+
+/* Old content */
 .tab{}
 .tab .container{
 	opacity:0.95;

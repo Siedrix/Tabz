@@ -1,54 +1,36 @@
 (function() {
 
-var User      = namespace.module("user");
+var User        = namespace.module("user");
+var Information = namespace.module("information");
 
 $(document).ready(function(){
-
 	$.template( "tabTemplate", $('#tabTemplate'));
 	$.template( "pagesTemplate", $('#pagesTemplate'));
 	$.template( "logInToReadLaterTemplate", $('#logInToReadLaterTemplate'));
 	$.template( "appsTemplate", $('#appsTemplate'));
 	$.template( "bookmarksTemplate", $('#bookmarksTemplate'));
 
-	$(window).resize(function() {
-		tabz.position();
-	});
+	console.log('Dashboard.js');
 
-	var tabz = {
-		actions : {},
-		user : (new User.Model).sync(),
-		position : function(){
-			var $container = $('#main');
-			var innerWidth = Math.min( $container.innerWidth(), $container.width() );
-			var units      = Math.floor( innerWidth / 300);
-			var unitWidth  = Math.floor( innerWidth / units );
-			$('.tab').width( unitWidth )
+    window.tabz = {};
+    tabz.user = (new User.Model).sync();
+    tabz.information = (new Information.Collection)
 
-			$container.isotope({itemSelector: '.tab'});
-		}
-	};
-	
-	chrome.extension.sendRequest({
-		type : 'getOpenTabs'
-	},function(response) {
-		$.each(response.tabs, function(i, item){
-			//console.log('Tab:',item)
-			$.tmpl( "tabTemplate", item ).data('tab',item).appendTo( "#main" );
-			if( tabz.user.get('hasReadItLater') ){
-				$('.buttons	.add').show();
-			}
+    tabz.information.bind('add', function(item){
+    	console.log('adding', item);
+    	$.tmpl( "tabTemplate", item.toJSON() ).data('tab',item.toJSON()).appendTo( "#main" )
+    })
 
-		});
+    tabz.information.sync();
 
-		tabz.position();
-	});
+    window.port = chrome.extension.connect({name: "dashboard"});
+    port.onMessage.addListener(function(msg) {
+        console.log('msg:',msg);
+    });    
+});
 
-	window.tabz = tabz;
-
-	window.port = chrome.extension.connect({name: "dashboard"});
-	port.onMessage.addListener(function(msg) {
-		console.log('msg:',msg);
-	});
+$(window).load(function(){
+	tabz.information.resize();
 });
 
 })();
