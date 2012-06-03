@@ -26,6 +26,7 @@ $(document).ready(function(){
 <script src="public/src/backbone.utils.js" type="text/javascript"></script>
 <script src="public/src/namespace.js" type="text/javascript"></script>
 
+<script src="app/dashboard/ui/navigation.js" type="text/javascript"></script>
 
 <script src="modules/user.js" type="text/javascript"></script>
 <script src="modules/information.js" type="text/javascript"></script>
@@ -41,9 +42,9 @@ $(document).ready(function(){
 	<nav>
 		<ul>
 			<li>Filters</li>
-			<li class="clickable button">Bookmarks</li>
-			<li class="clickable button">Save for later</li>
-			<li class="clickable button">Current Content</li>
+			<li class="clickable button" value="bookmarks">Bookmarks</li>
+			<li class="clickable button" value="saved">Save for later</li>
+			<li class="clickable button" value="current">Current Content</li>
 		</ul>
 	</nav>
 	<filters>

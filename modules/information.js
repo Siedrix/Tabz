@@ -34,46 +34,17 @@
     Information.Collection = Backbone.Collection.extend({
         model : Information.Model,
         name  : 'information',
+        events : {
+            'Tab::create'   : 'tabCreate',
+            'Tab::loading'  : 'tabLoading',
+            'Tab::complete' : 'tabComplete',
+            'Tab::remove'   : 'tabRemove',
+            'Navigation::Change' : 'navigationChange'
+        },
         initialize: function() {
             var collection = this;
-            if(typeof ee != "undefined"){
-                console.log('Binding information collection to ee');
 
-                ee.on('Tab::create'   , function(e,data){ 
-                    console.log(e,data); 
-                    collection.add(data.tab);
-                    collection.persist();
-                });
-                ee.on('Tab::loading'  , function(e,data){ 
-                    console.log(e,data); 
-
-                    if(data && data.url){
-                        var model = collection.findById(data.tabId);
-                        model.set({
-                            status : "loading",
-                            url : data.url
-                        });
-                    }
-                    collection.persist();
-                });
-                ee.on('Tab::complete' , function(e,data){ 
-                    console.log(e,data); 
-
-                    var model = collection.findById(data.tabId);
-
-                    if(model && data.tab){
-                        model.set(data.tab);
-                    }
-                    collection.persist();
-                });
-                ee.on('Tab::remove'   , function(e,data){ 
-                    console.log(e,data); 
-
-                    var model = collection.findById(data.tabId);
-                    collection.remove(model);
-                    collection.persist();
-                });
-            }
+            this.bindEvents(this.events, ee);
         },
     	getCurrentInfo :function (callback) {
             var collection = this;
@@ -105,6 +76,50 @@
             for (var i = currentTabs.length - 1; i >= 0; i--) {
                 currentTabs[i].destroy();
             };
+        },
+        tabCreate : function(data){
+            console.log('tabCreate', this, data);
+            this.add(data.tab);
+            this.persist();            
+
+            return this;
+        },
+        tabLoading : function(data){
+            console.log('tabLoading', this, data);
+
+            if(data && data.url){
+                var model = this.findById(data.tabId);
+                model.set({
+                    status : "loading",
+                    url : data.url
+                });
+            }
+            this.persist();            
+
+            return  this;
+        },
+        tabComplete : function(data){
+            console.log('tabComplete', this, data);
+
+            var model = this.findById(data.tabId);
+
+            if(model && data.tab){
+                model.set(data.tab);
+            }
+            this.persist(); 
+            
+            return this;           
+        },
+        tabRemove : function(data){
+            console.log('tabRemove', this, data);
+
+            var model = this.findById(data.tabId);
+            this.remove(model);
+            this.persist();
+            return this;            
+        },
+        navigationChange : function(data){
+            console.log('navigationChange', this, data);
         },
         resize : function() {         
             console.log('start resize');

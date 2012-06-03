@@ -1,7 +1,8 @@
 (function() {
 
-var User        = namespace.module("user");
-var Information = namespace.module("information");
+var User          = namespace.module("user");
+var Information   = namespace.module("information");
+var NavigationBar = namespace.module("navigationBar");
 
 ee.on('App::Start',function(){
     $.template( "tabTemplate", $('#tabTemplate'));
@@ -14,12 +15,10 @@ ee.on('App::Start',function(){
 
     window.tabz = {};
     tabz.user = (new User.Model).sync();
-    tabz.information = (new Information.Collection)
+    tabz.information = new Information.Collection
     tabz.port = new Port;
 
-    // tabz.information.bind('add', function(item){
-    //     $.tmpl( "tabTemplate", item.toJSON() ).data('tab',item.toJSON()).appendTo( "#main" )
-    // })
+    tabz.navigation = new NavigationBar.Views.Header({el : 'nav'})
 
     tabz.information.sync();    
 
@@ -45,9 +44,7 @@ ee.on('App::Start',function(){
         if(model){
             model.set(data.changes);
         }
-    });    
-
-
+    });
 });
 
 $(window).load(function(){
