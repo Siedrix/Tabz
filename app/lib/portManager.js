@@ -44,7 +44,7 @@ Class('PortManager')({
                 portManager.removePort(data);
             });
             port.onMessage.addListener(function (data) {
-                portManager.onMessage(data);
+                portManager.onMessage(data, port);
             });
 
             return this;
@@ -68,8 +68,12 @@ Class('PortManager')({
                 })
             }
         },
-        onMessage : function(msg){
+        onMessage : function(msg, port){
             console.log('got',msg);
+
+            msg.port = port;
+
+            ee.emit('Port::'+ msg.type, msg);
         }
     }
 });

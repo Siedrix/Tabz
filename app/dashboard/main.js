@@ -6,10 +6,6 @@ var NavigationBar = namespace.module("navigationBar");
 
 ee.on('App::Start',function(){
     $.template( "tabTemplate", $('#tabTemplate'));
-    $.template( "pagesTemplate", $('#pagesTemplate'));
-    $.template( "logInToReadLaterTemplate", $('#logInToReadLaterTemplate'));
-    $.template( "appsTemplate", $('#appsTemplate'));
-    $.template( "bookmarksTemplate", $('#bookmarksTemplate'));
 
     console.log('Dashboard.js');
 
@@ -20,8 +16,10 @@ ee.on('App::Start',function(){
 
     tabz.navigation = new NavigationBar.Views.Header({el : 'nav'})
 
-    tabz.information.sync();    
+    tabz.information.sync();
 
+    // Port bindings
+    // Move to port object
     ee.on('Port::*',function(e,data){
         console.log('Port got message', e, data );
     });
@@ -45,6 +43,7 @@ ee.on('App::Start',function(){
             model.set(data.changes);
         }
     });
+    // End port bindings
 });
 
 $(window).load(function(){
