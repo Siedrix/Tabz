@@ -17,6 +17,10 @@ ee.on('App::Start',function(){
         console.log('log', data);
         tabz.information.persist();
     });
+
+    tabz.serverApi = new TabzServerApi({
+        user : tabz.user
+    })
 });
 
 

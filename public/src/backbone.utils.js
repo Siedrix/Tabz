@@ -3,7 +3,6 @@
         var self = this;
 
         _.each(events, function(handler, event){
-            console.log(event, self[handler]);
             ee.on(event, function(e, data){
                 self[handler](data, e);
             });

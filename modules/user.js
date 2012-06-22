@@ -12,7 +12,8 @@
 
             this.bindEvents(this.events, ee);
         },
-        addToken : function(token){
+        setServerToken : function(username,token){
+            this.set('username', username);
             this.set('token', token);
 
             return this;
