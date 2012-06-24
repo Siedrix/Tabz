@@ -43,7 +43,7 @@
             tabz.port.postMessage('LogInToReadItLater',{
                 username : username,
                 password : password
-            },function(response) {      
+            },function(response) {
                 if(response.success == 'invalid'){
                     alert('Sorry, no log in')
                 }else{

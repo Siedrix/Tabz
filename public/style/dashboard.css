@@ -111,6 +111,10 @@ filters ul{
 	overflow: visible !important;
 }
 
+#main .tab .buttons{
+	text-align: right;
+}
+
 /* Helpers */
 .clickable{
 	cursor: pointer;

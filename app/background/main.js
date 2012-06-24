@@ -20,7 +20,14 @@ ee.on('App::Start',function(){
 
     tabz.serverApi = new TabzServerApi({
         user : tabz.user
-    })
+    });
+
+    ee.on('Port::Snippet::Create',function(e,data){
+        tabz.serverApi.createSnipet(data, function(snippet){
+            console.log('data',data, snippet);
+            chrome.tabs.remove(data.id);
+        });
+    });
 });
 
 

@@ -2,6 +2,9 @@
 
     Information.Model = Backbone.Model.extend({
         element : null,
+        events : {
+            'click .buttons a': 'saveForLater'
+        },
         initialize: function() {
             var model = this;
 
@@ -15,7 +18,25 @@
                     console.log('calling resize');
                     tabz.information.resize();
                 });
+
+                this.element.delegate('.buttons a', 'click', function(e){
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    model.requestSaveForLater();
+                });
+
+                if( !tabz.user.get('username') ){
+                    this.element.find('.buttons a').show();
+                }
             }
+        },
+        requestSaveForLater : function(){
+            var model = this;
+
+            tabz.port.postMessage('Snippet::Create',this.toJSON(),function(data){
+                model.destroy();
+            });
         },
         destroy: function(options) {
             options = options ? _.clone(options) : {};
