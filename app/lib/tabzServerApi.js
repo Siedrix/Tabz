@@ -24,6 +24,7 @@ Class('TabzServerApi')({
 				token : this._token
 			}, function(data){
 				console.log(data);
+				callback(data);
 			});			
 		}
 	}

@@ -7,36 +7,15 @@
         },
         initialize: function() {
             var model = this;
-
-            if($.tmpl){
-                this.element = $('<div/>')
-                this.element.html( $.tmpl( "tabTemplate", this.toJSON() ) );
-                this.element.data('tab',this.toJSON()).appendTo( "#main" );
-
-                this.bind('change', function(){                    
-                    this.element.html( $.tmpl( "tabTemplate", this.toJSON() ) );
-                    console.log('calling resize');
-                    tabz.information.resize();
-                });
-
-                this.element.delegate('.buttons a', 'click', function(e){
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    model.requestSaveForLater();
-                });
-
-                if( !tabz.user.get('username') ){
-                    this.element.find('.buttons a').show();
-                }
-            }
         },
         requestSaveForLater : function(){
-            var model = this;
-
-            tabz.port.postMessage('Snippet::Create',this.toJSON(),function(data){
-                model.destroy();
-            });
+            tabz.port.postMessage('Snippet::Create',this.toJSON(),function(data){});
+        },
+        requestClose : function(){
+            tabz.port.postMessage('Tab::Close',this.toJSON(),function(data){});
+        },
+        requestFocus : function(){
+            tabz.port.postMessage('Tab::Focus',this.toJSON(),function(data){});  
         },
         destroy: function(options) {
             options = options ? _.clone(options) : {};
@@ -59,8 +38,7 @@
             'Tab::create'   : 'tabCreate',
             'Tab::loading'  : 'tabLoading',
             'Tab::complete' : 'tabComplete',
-            'Tab::remove'   : 'tabRemove',
-            'Navigation::Change' : 'navigationChange'
+            'Tab::remove'   : 'tabRemove'
         },
         initialize: function() {
             var collection = this;
@@ -79,7 +57,7 @@
                 list = _.flatten(list);
 
                 _.each(list,function(tab){
-                    tab.type = "current";
+                    tab.type = "tab";
                     collection.add(tab);
                 });
 
@@ -99,6 +77,7 @@
             };
         },
         tabCreate : function(data){
+            data.tab.type = 'tab';
             console.log('tabCreate', this, data);
             this.add(data.tab);
             this.persist();            
@@ -110,9 +89,11 @@
 
             if(data && data.url){
                 var model = this.findById(data.tabId);
+                console.log('Added loading tab', data, model.toJSON() );
                 model.set({
+                    type   : 'tab',
                     status : "loading",
-                    url : data.url
+                    url    : data.url
                 });
             }
             this.persist();            
@@ -125,6 +106,8 @@
             var model = this.findById(data.tabId);
 
             if(model && data.tab){
+                console.log('Added completed tab');
+                data.type = 'tab';
                 model.set(data.tab);
             }
             this.persist(); 
@@ -138,9 +121,6 @@
             this.remove(model);
             this.persist();
             return this;            
-        },
-        navigationChange : function(data){
-            console.log('navigationChange', this, data);
         },
         resize : function() {         
             console.log('start resize');
@@ -158,6 +138,37 @@
                 itemSelector: '.tab'      
             });
             console.log('end resize');
+        },
+        close  : function (tabId) {
+            chrome.tabs.remove(tabId);
+
+            return this;
+        },
+        focus : function (tabId) {
+            chrome.tabs.update(tabId, {active:true})
+
+            return this;
+        },
+        syncUnread : function(){
+            var collection = this;
+
+            tabz.serverApi.fetchUnreadSnipets(function(data){
+                console.log(collection, data);
+
+                tabz.information.filter(function(model){
+                    return model.get('type') == 'snipet' && model.get('status') == 'not-read'
+                }).forEach(function(snipet){
+                    snipet.destroy();
+                })
+
+                _.each(data.snipets, function(snipet){
+                    console.log('snipet',snipet);
+
+                    collection.add(snipet);
+                });
+
+                collection.persist();
+            });
         },
         persist : function () {
             localStorage.setItem(this.name, JSON.stringify( this.toJSON() ) );

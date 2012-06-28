@@ -3,6 +3,7 @@
 var User          = namespace.module("user");
 var Information   = namespace.module("information");
 var NavigationBar = namespace.module("navigationBar");
+var Cards         = namespace.module("cards");
 
 ee.on('App::Start',function(){
     $.template( "tabTemplate", $('#tabTemplate'));
@@ -15,6 +16,7 @@ ee.on('App::Start',function(){
     tabz.port = new Port;
 
     tabz.navigation = new NavigationBar.Views.Header({el : 'nav'})
+    tabz.cards      = new Cards.Views.Main({el : '#main'})
 
     tabz.information.sync();
 
@@ -43,6 +45,14 @@ ee.on('App::Start',function(){
             model.set(data.changes);
         }
     });
+
+    //Init navigation bar on correct value
+    var navigationBarStatus = localStorage.getItem("navigationBar:status");
+    if(navigationBarStatus){
+        ee.emit('Navigation::Change',{"value":navigationBarStatus});
+    }else{
+        ee.emit('Navigation::Change',{"value":"current"});
+    }
     // End port bindings
 });
 
