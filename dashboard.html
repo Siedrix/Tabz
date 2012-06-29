@@ -44,7 +44,7 @@ $(document).ready(function(){
 		<ul>
 			<li>Filters</li>
 			<li class="clickable button" value="bookmark">Bookmarks</li>
-			<li class="clickable button" value="snipet">Save for later</li>
+			<li class="clickable button" value="snippet">Save for later</li>
 			<li class="clickable button" value="tab">Current Content</li>
 		</ul>
 	</nav>
@@ -71,6 +71,17 @@ $(document).ready(function(){
 		</div>
 	</article>
 </template>
+
+<template id="snippetTemplate" text="text/template">
+	<article class="snippet">
+		<div class="container">
+			<h4>
+				${title}
+			</h4>
+		</div>
+	</article>
+</template>
+
 <template id="pagesTemplate" text="text/template">
 	<div class="readItLaterTab"><a href="${url}">${title}</a></div>
 </template>

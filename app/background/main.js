@@ -27,14 +27,14 @@ ee.on('App::Start',function(){
     });
 
     ee.on('Port::Snippet::Create',function(e,data){
-        tabz.serverApi.createSnipet(data, function(snippet){
+        tabz.serverApi.createSnippet(data, function(snippet){
             console.log('data',data, snippet);
             chrome.tabs.remove(data.id);
         });
     });
 
     ee.on('Port::Snippet::FetchUnread', function(e, data){
-        tabz.serverApi.fetchUnreadSnipets(function(snippets){
+        tabz.serverApi.fetchUnreadSnippets(function(snippets){
             console.log('snippets', data.port, snippets);
             
             data.port.postMessage({
@@ -51,6 +51,13 @@ ee.on('App::Start',function(){
 
     ee.on('Port::Tab::Focus', function(e, data){
         tabz.information.focus(data.id); 
+    });
+
+    ee.on('Port::Tab::Open', function(e, data){
+        chrome.tabs.create({
+            url    : data.url,
+            active : true
+        });
     });
 });
 

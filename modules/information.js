@@ -17,6 +17,9 @@
         requestFocus : function(){
             tabz.port.postMessage('Tab::Focus',this.toJSON(),function(data){});  
         },
+        requestOpen : function(){
+            tabz.port.postMessage('Tab::Open',this.toJSON(),function(data){});    
+        },
         destroy: function(options) {
             options = options ? _.clone(options) : {};
             var model = this;
@@ -24,7 +27,7 @@
             model.trigger('destroy', model, model.collection, options);
 
             if($.tmpl){
-                this.element.remove();
+                this.element && this.element.remove();
             }
 
             return null;
@@ -128,14 +131,15 @@
                 innerWidth   = $container.innerWidth(),
                 numberOfTags = Math.floor( innerWidth / 250 );
 
-            $('.tab').width( (innerWidth / numberOfTags) - 1);
+            debugger;
+            $('.tab, .snippet').width( (innerWidth / numberOfTags) - 1);
 
             if( $container.hasClass('isotope') ){
                 $container.isotope( 'reloadItems');
             }
 
             $container.isotope({        
-                itemSelector: '.tab'      
+                itemSelector: '.tab, .snippet'      
             });
             console.log('end resize');
         },
@@ -152,19 +156,19 @@
         syncUnread : function(){
             var collection = this;
 
-            tabz.serverApi.fetchUnreadSnipets(function(data){
+            tabz.serverApi.fetchUnreadSnippets(function(data){
                 console.log(collection, data);
 
                 tabz.information.filter(function(model){
-                    return model.get('type') == 'snipet' && model.get('status') == 'not-read'
-                }).forEach(function(snipet){
-                    snipet.destroy();
+                    return model.get('type') == 'snippet' && model.get('status') == 'not-read'
+                }).forEach(function(snippet){
+                    snippet.destroy();
                 })
 
-                _.each(data.snipets, function(snipet){
-                    console.log('snipet',snipet);
+                _.each(data.snippets, function(snippet){
+                    console.log('snippet',snippet);
 
-                    collection.add(snipet);
+                    collection.add(snippet);
                 });
 
                 collection.persist();

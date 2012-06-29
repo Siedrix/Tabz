@@ -6,7 +6,8 @@ var NavigationBar = namespace.module("navigationBar");
 var Cards         = namespace.module("cards");
 
 ee.on('App::Start',function(){
-    $.template( "tabTemplate", $('#tabTemplate'));
+    $.template( "tabTemplate"    , $('#tabTemplate'));
+    $.template( "snippetTemplate", $('#snippetTemplate'));
 
     console.log('Dashboard.js');
 

@@ -122,6 +122,9 @@ filters ul{
 
 /* Old content */
 .tab{}
+
+
+.snippet .container,
 .tab .container{
 	opacity:0.95;
 	background: white url(../images/content-area-bottombg.png) repeat-x bottom left;

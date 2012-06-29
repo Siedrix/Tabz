@@ -5,21 +5,21 @@ Class('TabzServerApi')({
 			this._username = config.user.get("username");
 			this._token    = config.user.get("token");
 		},
-		createSnipet : function(snipet, callback){
+		createSnippet : function(snippet, callback){
 			console.log(this._username, this._token);
 
-			$.post(this.constructor.serverUrl + 'api/snipet/create', {
+			$.post(this.constructor.serverUrl + 'api/snippet/create', {
 				username : this._username,
 				token : this._token,
-				title : snipet.title,
-				url   : snipet.url
-			}, function(snipet){
-				console.log('on server api, snipet created:',snipet);
-				callback(snipet);
+				title : snippet.title,
+				url   : snippet.url
+			}, function(snippet){
+				console.log('on server api, snippet created:',snippet);
+				callback(snippet);
 			});
 		},
-		fetchUnreadSnipets : function(callback){
-			$.get(this.constructor.serverUrl + 'api/snipet/fetchUnread', {
+		fetchUnreadSnippets : function(callback){
+			$.get(this.constructor.serverUrl + 'api/snippet/fetchUnread', {
 				username : this._username,
 				token : this._token
 			}, function(data){
