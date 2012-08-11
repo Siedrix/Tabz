@@ -11,6 +11,9 @@
         requestSaveForLater : function(){
             tabz.port.postMessage('Snippet::Create',this.toJSON(),function(data){});
         },
+        requestMarkAsRead : function(){
+            tabz.port.postMessage('Snippet::MarkAsRead',this.toJSON(),function(data){});
+        },        
         requestClose : function(){
             tabz.port.postMessage('Tab::Close',this.toJSON(),function(data){});
         },
@@ -19,6 +22,9 @@
         },
         requestOpen : function(){
             tabz.port.postMessage('Tab::Open',this.toJSON(),function(data){});    
+        },
+        update : function(){
+            console.log('updating');
         },
         destroy: function(options) {
             options = options ? _.clone(options) : {};
@@ -83,7 +89,7 @@
             data.tab.type = 'tab';
             console.log('tabCreate', this, data);
             this.add(data.tab);
-            this.persist();            
+            this.persist();         
 
             return this;
         },
@@ -131,7 +137,6 @@
                 innerWidth   = $container.innerWidth(),
                 numberOfTags = Math.floor( innerWidth / 250 );
 
-            debugger;
             $('.tab, .snippet').width( (innerWidth / numberOfTags) - 1);
 
             if( $container.hasClass('isotope') ){
@@ -153,7 +158,7 @@
 
             return this;
         },
-        syncUnread : function(){
+        syncUnread : function(callback){
             var collection = this;
 
             tabz.serverApi.fetchUnreadSnippets(function(data){
@@ -167,11 +172,16 @@
 
                 _.each(data.snippets, function(snippet){
                     console.log('snippet',snippet);
+                    snippet.id = snippet._id;
 
                     collection.add(snippet);
                 });
 
                 collection.persist();
+
+                if(callback){
+                    callback();
+                }
             });
         },
         persist : function () {
@@ -179,7 +189,7 @@
 
             return this;
         },
-        sync : function () {
+        loadFromLocalStorage : function () {
             this.reset();
             var data = JSON.parse( localStorage.getItem(this.name) ),
                 collection = this;
@@ -190,7 +200,6 @@
 
             return this;
         }
-
     });
 
 })(namespace.module("information"));

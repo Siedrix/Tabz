@@ -58,7 +58,7 @@ $(document).ready(function(){
 	<section id="main"></section>
 <!-- Templates Start, need to move to async load !-->
 <template id="tabTemplate" text="text/template">
-	<article class="tab {{if pinned}}pinned{{/if}}">
+	<article class="tab {{if pinned}}pinned{{/if}} card">
 		<div class="container">
 			<h4>
 				{{if favIconUrl}}<img class="favicon" src="${favIconUrl}">{{/if}}
@@ -73,11 +73,14 @@ $(document).ready(function(){
 </template>
 
 <template id="snippetTemplate" text="text/template">
-	<article class="snippet">
+	<article class="snippet card">
 		<div class="container">
 			<h4>
 				${title}
 			</h4>
+			<div class="buttons">
+				<a href="#${id}" class="add" style="">Mark as Read</a>
+			</div>			
 		</div>
 	</article>
 </template>

@@ -2,6 +2,7 @@
 
 var Information = namespace.module("information");
 var User = namespace.module("user");
+var DataPoint = namespace.module("data-point");
 
 ReadItLater.setApikey('aN2dbH72T2582Es293A5105YbOg9k4eD');
 
@@ -11,8 +12,9 @@ ee.on('App::Start',function(){
     tabz.user        = (new User.Model).sync();
     tabz.tabListener = new TabListener;
     tabz.information = new Information.Collection;
+    tabz.dataPoint   = new DataPoint.Collection;
     tabz.portManager = new PortManager;
-    tabz.serverApi = new TabzServerApi({
+    tabz.serverApi   = new ServerApi({
         user : tabz.user
     });
 
@@ -21,9 +23,22 @@ ee.on('App::Start',function(){
         tabz.information.persist();
     });
 
+    // Fetch local storage models
+    for (key in localStorage){
+        var model = key.split('-')[0];
+        var id    = key.split('-')[1];
+        if(tabz[ model ] && id){
+            console.log(localStorage.getItem( key ));
+
+            var data = JSON.parse( localStorage.getItem( key ) );
+
+            tabz[ model ].add(data)
+        }
+    }
+
     tabz.information.syncUnread(function(data){
         console.log('unread snippets: Done!!');
-        tabz.information.persist();  
+        tabz.information.persist();
     });
 
     ee.on('Port::Snippet::Create',function(e,data){
@@ -32,6 +47,17 @@ ee.on('App::Start',function(){
             chrome.tabs.remove(data.id);
         });
     });
+
+    ee.on('Port::Snippet::MarkAsRead',function(e,data){
+        var snippet = tabz.information.findById(data._id);
+
+        console.log(e, snippet);
+
+        snippet.set('status', 'read');
+        snippet.set('type'  , 'bookmark');
+        
+        snippet.save();        
+    });  
 
     ee.on('Port::Snippet::FetchUnread', function(e, data){
         tabz.serverApi.fetchUnreadSnippets(function(snippets){

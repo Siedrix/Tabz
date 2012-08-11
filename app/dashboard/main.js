@@ -19,7 +19,7 @@ ee.on('App::Start',function(){
     tabz.navigation = new NavigationBar.Views.Header({el : 'nav'})
     tabz.cards      = new Cards.Views.Main({el : '#main'})
 
-    tabz.information.sync();
+    tabz.information.loadFromLocalStorage();
 
     // Port bindings
     // Move to port object

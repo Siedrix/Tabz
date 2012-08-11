@@ -79,6 +79,13 @@
             card.element.find('> article').click(function(e){
                 card.requestOpen();
             });            
+
+            card.element.find('.buttons a').click(function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                
+                card.requestMarkAsRead();
+            });
         }
     });
 
