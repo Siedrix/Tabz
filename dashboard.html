@@ -1,0 +1,46 @@
+<html>
+<head>
+	<link href="public/css/main.css" type="text/css" rel="stylesheet">
+
+	<script src="app/src/underscore.js"></script>
+	<script src="app/src/jquery.js"></script>
+	<script src="app/src/jquery.tmpl.js"></script>
+	<script src="app/src/jquery.isotope.min.js"></script>
+
+	<script src="app/src/eventemitter2.js"></script>
+
+	<script src="app/src/neon.js"></script>
+	<script src="app/src/widget/CustomEvent.js"></script>
+	<script src="app/src/widget/CustomEventSupport.js"></script>
+	<script src="app/src/widget/NodeSupport.js"></script>
+	<script src="app/src/widget/Widget.js"></script>
+
+	<script src="app/lib/utils.js"></script>
+	
+	<script src="app/lib/port.js"></script>
+	<script src="app/dashboard/tabCard.js" type="text/javascript"></script>
+	<script src="app/dashboard/dashboard.js" type="text/javascript"></script>
+	<script src="app/dashboard/main.js" type="text/javascript"></script>
+</head>
+<body>
+	<div id="nav-wrapper">
+		<nav>
+			<p><a href="/options.html">Options </a></p>
+		</nav>
+	</div>
+<template id="tabCardTemplate" text="text/template">
+	<article class="tab {{if pinned}}pinned{{/if}}">
+		<div class="container">
+			<h4>
+				{{if favIconUrl}}<img class="favicon" src="${favIconUrl}">{{/if}}
+				${title || url}
+			</h4>
+			<div class="buttons">
+				<a href="#${id}" class="add" style="display:none">Read later</a>
+			</div>
+			{{if !pinned}}<img class="close" src="public/images/close.png">{{/if}}
+		</div>
+	</article>
+</template>	
+</body>
+</html>

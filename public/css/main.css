@@ -1,0 +1,80 @@
+body {
+	background: url('../images/catbg.jpg') repeat
+}
+
+template {
+	display:none;
+}
+
+#nav-wrapper {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 5px;
+	width: 100%;
+	background: gray;
+}
+
+#nav-wrapper nav {
+	background: gray;
+	position: absolute;
+	right: 0;
+	top: 0;	
+
+	padding: 10px 15px;
+}
+
+#nav-wrapper nav a{
+	color : white;
+	text-decoration: none
+}
+
+#nav-wrapper nav p{
+	margin: 0;
+}
+
+#nav-wrapper nav:before { 
+	content: " ";
+	display: block;
+	width: 0;
+	height: 0;
+	border-bottom: 50px solid transparent;
+	border-right: 30px solid gray;
+	position: absolute;
+	top: 38px;
+	margin-top: -50px;
+	right: 100%;
+	z-index: 2;
+}
+
+.dashboard{
+	margin-top: 47px;
+	padding-right: 20px;
+}
+
+.tab{}
+.tab .container{
+	opacity:0.95;
+	background: white url(../images/content-area-bottombg.png) repeat-x bottom left;
+	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+	position: relative;
+	min-height: 40px;
+	margin: 9px 9px;
+	padding: 24px 24px 35px;
+}
+.tab.pinned .container{
+	box-shadow:0px 0px 5px #f6de81;
+}
+
+.tab h4{
+	word-wrap: break-word;
+}
+.tab .favicon{
+	max-width:36px;
+	max-height:36px;
+}
+.tab .close{
+	position:absolute;
+	right:-20px;
+	top:-15px;
+}

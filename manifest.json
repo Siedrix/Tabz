@@ -1,0 +1,23 @@
+{
+    "name": "Tabz",
+    "version": "0.3",
+    "manifest_version": 2,
+    "description": "Show as much data point on my new tab.",
+    "background": {
+        "persistent": false,
+        "scripts": [
+            "app/src/underscore.js",
+            "app/src/eventemitter2.js",
+            "app/src/neon.js",
+            "app/lib/portManager.js",
+            "app/background/tabListener.js",
+            "background.js"
+        ]
+    },
+    "permissions": ["tabs"],
+    "chrome_url_overrides" : {
+        "newtab": "dashboard.html"
+    },
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "options_page": "options.html"
+}
